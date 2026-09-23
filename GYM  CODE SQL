@@ -13,9 +13,9 @@ DROP TABLE IF EXISTS Trainer;
 SET FOREIGN_KEY_CHECKS = 1;
 
 
--- =========================================
--- 1. CREATE TABLES
--- =========================================
+
+ 1. CREATE TABLES
+
 
 CREATE TABLE Trainer (
     TrainerID INT PRIMARY KEY,
@@ -82,9 +82,9 @@ CREATE TABLE Payment (
 ) ENGINE=InnoDB;
 
 
--- =========================================
+
 -- 2. TRIGGER
--- =========================================
+
 
 DELIMITER $$
 
@@ -109,9 +109,9 @@ END$$
 DELIMITER ;
 
 
--- =========================================
--- 3. TRAINER DATA
--- =========================================
+
+3. TRAINER DATA
+
 
 INSERT INTO Trainer
 (TrainerID, TrainerName, Specialization, ContactNo)
@@ -128,9 +128,9 @@ VALUES
 (110,'Yogesh Salvi','HIIT Training','9822190334');
 
 
--- =========================================
--- 4. MEMBERSHIP PLANS
--- =========================================
+
+ 4. MEMBERSHIP PLANS
+
 
 INSERT INTO MembershipPlan
 (PlanID, PlanName, DurationMonths, Fee)
@@ -141,9 +141,9 @@ VALUES
 (204,'Annual',12,15000);
 
 
--- =========================================
--- 5. MEMBERS
--- =========================================
+
+5. MEMBERS
+
 
 INSERT INTO Member
 (MemberID, FullName, ContactNo, Age, JoinDate, PlanID, TrainerID)
@@ -210,9 +210,9 @@ VALUES
 (1060,'Trupti Khot','9823257480',44,'2026-07-09',202,104);
 
 
--- =========================================
--- 6. ATTENDANCE
--- =========================================
+
+ 6. ATTENDANCE
+
 
 INSERT IGNORE INTO Attendance
 (MemberID, AttendanceDate, CheckInTime)
@@ -439,9 +439,8 @@ VALUES
 (1060,'2026-07-13','08:30:00');
 
 
--- =========================================
--- 7. PAYMENT DATA
--- =========================================
+ 7. PAYMENT DATA
+
 
 INSERT INTO Payment
 (PaymentID, MemberID, PaymentDate, AmountPaid, PaymentMode)
@@ -508,9 +507,9 @@ VALUES
 (5060,1060,'2026-07-09',4500,'UPI');
 
 
--- =========================================
--- 8. DML TRANSACTION
--- =========================================
+
+ 8. DML TRANSACTION
+
 
 START TRANSACTION;
 
@@ -529,9 +528,9 @@ WHERE MemberID = 9999;
 ROLLBACK;
 
 
--- =========================================
--- 9. JOIN
--- =========================================
+
+9. JOIN
+
 
 SELECT
     m.MemberID,
@@ -547,9 +546,9 @@ LEFT JOIN Trainer t
 ORDER BY m.MemberID;
 
 
--- =========================================
--- 10. AGGREGATE
--- =========================================
+
+ 10. AGGREGATE
+
 
 SELECT
     mp.PlanName,
@@ -566,9 +565,9 @@ SELECT
 FROM Payment;
 
 
--- =========================================
--- 11. ATTENDANCE COUNT
--- =========================================
+
+11. ATTENDANCE COUNT
+
 
 SELECT
     m.MemberID,
@@ -581,9 +580,9 @@ GROUP BY m.MemberID, m.FullName
 ORDER BY AttendanceCount DESC, m.MemberID;
 
 
--- =========================================
--- 12. PAYMENT MODE SUMMARY
--- =========================================
+
+ 12. PAYMENT MODE SUMMARY
+
 
 SELECT
     PaymentMode,
@@ -594,9 +593,9 @@ GROUP BY PaymentMode
 ORDER BY AmountCollected DESC;
 
 
--- =========================================
--- 13. SUBQUERY
--- =========================================
+ 
+ 13. SUBQUERY
+
 
 SELECT
     MemberID,
@@ -610,9 +609,9 @@ WHERE Age > (
 ORDER BY Age DESC;
 
 
--- =========================================
--- 14. SUBQUERY - ABOVE AVERAGE PAYMENT
--- =========================================
+ 
+ 14. SUBQUERY - ABOVE AVERAGE PAYMENT
+ 
 
 SELECT
     m.MemberID,
@@ -633,9 +632,9 @@ HAVING SUM(p.AmountPaid) > (
 ORDER BY TotalPaid DESC;
 
 
--- =========================================
--- 15. EXPIRY REPORT
--- =========================================
+ 
+ 15. EXPIRY REPORT
+
 
 SELECT
     m.MemberID,
@@ -650,10 +649,9 @@ JOIN MembershipPlan mp
     ON m.PlanID = mp.PlanID
 ORDER BY ExpiryDate;
 
+ 
+ 16. CHECK RESULTS
 
--- =========================================
--- 16. CHECK RESULTS
--- =========================================
 
 SELECT COUNT(*) AS MembersCount
 FROM Member;
@@ -668,11 +666,11 @@ SELECT SUM(AmountPaid) AS PaymentTotal
 FROM Payment;
 
 
--- =========================================
--- 17. TEST TRIGGER
--- =========================================
--- Run this separately only if you want to test the trigger.
--- It should give an error.
+ 
+ 17. TEST TRIGGER
+
+ Run this separately only if you want to test the trigger.
+ It should give an error.
 
 -- INSERT INTO Attendance
 -- (MemberID, AttendanceDate, CheckInTime)
